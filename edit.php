@@ -10,33 +10,39 @@
    
 </head>
 <body>
-<h1 class="text-center"> Editer Etudiant</h1>
+<?php
+    include 'dbconnexion.php';
+    $rep=$cnx->prepare('SELECT * FROM students where id= :param_id');
+    $rep->bindParam(':param_id',$_GET['id']);
+    $rep->execute();
+    $data=$rep->fetch();
 
-<div class="container">
-<form action="update.php" method="post">
-  <div class="form-group">
-      <label for="firstname">firstname</label>
-      <input type="text" name="firstname" class="form-control" >
-
-      <label for="lastname">lastname</label>
-      <input type="text" name="lastname" class="form-control" >
-  </div>
-
-  <div class="form-group">
-      <label for="email">E-mail</label>
-      <input type="text" name="email" class="form-control">
-
-      <label for="phone">Phone</label>
-      <input type="number" name="phone" class="form-control">
-  </div>
-
-  <div class="form-group">
- 
-  <button type="submit" class="btn btn-outline-enregistrer">Save</button>
- 
-  <button type="reset" class="btn btn-default">Return</button>
-  </div>
-</div>
+    ?>
+    <div class="container">
+        <fieldset>
+            <legend>Editer Etudiant</legend>
+            <form action="update.php" method="post">
+                <div class="form-group">
+                    <label for="fn">First Name</label>
+                    <input type="text" class="form-control" name="firstname" value="<?=$data['firstname']?>">
+                </div>
+                <div class="form-group">
+                    <label for="ln">Last Name</label>
+                    <input type="text" class="form-control" name="lastname" value="<?=$data['lastname']?>">
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" class="form-control" name="email" value="<?=$data['email']?>">
+                </div>
+                <div class="form-group">
+                    <label for="ph">Phone</label>
+                    <input type="text" class="form-control" name="phone" value="<?=$data['phone']?>">
+                </div>
+                <input type="number" name="id" id='id' value="<?=$_GET['id']?>" hidden>
+                <button type="submit" class="btn btn-outline-success">Change</button>
+            </form>
+        </fieldset>
+    </div>
  
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
